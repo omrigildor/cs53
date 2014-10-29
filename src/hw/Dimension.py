@@ -4,7 +4,7 @@
 from vecutil import list2vec
 from GF2 import one
 from solver import solve
-from matutil import listlist2mat, coldict2mat, mat2coldict
+from matutil import listlist2mat, coldict2mat, mat2coldict, mat2rowdict
 from mat import Mat
 from independence import rank
 from vec import Vec
@@ -258,5 +258,15 @@ def find_triangular_matrix_inverse(A):
         >>> find_triangular_matrix_inverse(A) == Mat(({0, 1, 2, 3}, {0, 1, 2, 3}), {(0, 1): -0.5, (1, 2): -0.3, (3, 2): 0.0, (0, 0): 1.0, (3, 3): 1.0, (3, 0): 0.0, (3, 1): 0.0, (2, 1): 0.0, (0, 2): -0.05000000000000002, (2, 0): 0.0, (1, 3): -0.87, (2, 3): -0.1, (2, 2): 1.0, (1, 0): 0.0, (0, 3): -3.545, (1, 1): 1.0})
         True
     '''
-    pass
+    I = {i:Vec(A.D[0],{i:1}) for i in A.D[1]}
+    rl = list()
+    ll = list()
+    cd = dict()
+    rd = mat2rowdict(A)
+    for k,i in rd.items():
+        ll.append(k)
+        rl.append(rd[k])
+    for k in ll:
+        cd[k]= triangular_solve(rl,ll,I[k])
+    return coldict2mat(cd)
 

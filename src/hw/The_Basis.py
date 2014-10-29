@@ -239,7 +239,7 @@ d4=Vec(D, {'b':1, 'c':1, 'd':-1})
 # print(((is_superfluous([d0,d1,d2,d3],2))),True)
 # print(((is_superfluous([d0,d1,d2,d3],1))),True)
 # print(((is_superfluous([d0,d1,d2,d3],0))),True)
-# print(((is_superfluous([d0,d1,d2,d3,d4],4))),True) #this case
+# print(((is_superfluous([d0,d1,d2,d3,d4],4))),True)
 # print(((is_superfluous([d0,d1,d2,d3,d4],3))),True)
 # print(((is_superfluous([d0,d1,d2,d3,d4],2))),True)
 # print(((is_superfluous([d0,d1,d2,d3,d4],1))),True)
@@ -285,10 +285,18 @@ def subset_basis(T):
             break
         if is_superfluous(A,i):
             A.pop(i)
+
+        else:
             i = i + 1
 
     return A
 
+a0 = Vec({'a','b','c','d'}, {'a':1})
+a1 = Vec({'a','b','c','d'}, {'b':1})
+a2 = Vec({'a','b','c','d'}, {'c':1})
+a3 = Vec({'a','b','c','d'}, {'a':1,'c':3})
+sb = subset_basis([a0, a1, a2, a3])
+print(all(v in [a0, a1, a2, a3] for v in sb))
 
 
 ## 18: (Problem 5.14.18) Superset Basis Lemma in Python
